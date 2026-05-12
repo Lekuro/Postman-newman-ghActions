@@ -1,0 +1,33 @@
+name: Postman Newman Tests
+
+on:
+  push:
+    branches:
+      - main  # або назва вашої головної гілки
+
+jobs:
+  test-and-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Postman Tests
+        run: |
+          mkdir -p reports
+          npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra --reporter-htmlextra-export reports/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports

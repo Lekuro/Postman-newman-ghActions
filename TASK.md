@@ -14,7 +14,7 @@
    - In Postman, export your Collection as a JSON file (v2.1).
    - Export your Environment (if any) as a JSON file.
 2. **Move files to Repository:**
-   - Place the exported JSON files into your local repository folder: `d:\other\TestSquadLLC\git-repos\Postman-newman-ghActions`.
+   - Place the exported JSON files into your local repository folder: `d:\Postman-newman-ghActions`.
 3. **Initialize NPM:**
    - Run `npm init -y` to create a `package.json`.
    - Install Newman and the HTML reporter: `npm install newman newman-reporter-htmlextra --save-dev`.
