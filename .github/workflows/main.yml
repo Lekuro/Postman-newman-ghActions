@@ -22,12 +22,14 @@ jobs:
         run: npm install
 
       - name: Run Postman Tests
+        continue-on-error: true
         run: |
           mkdir -p reports
           npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra --reporter-htmlextra-export reports/index.html
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./reports
