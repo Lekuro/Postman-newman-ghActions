@@ -2,8 +2,10 @@ name: Postman Newman Tests
 
 on:
   push:
-    branches:
-      - main  # або назва вашої головної гілки
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   test-and-report:

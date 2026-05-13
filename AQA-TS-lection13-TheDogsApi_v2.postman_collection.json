@@ -1,255 +1,362 @@
 {
-  "info": {
-    "_postman_id": "90804514-335e-462f-98e2-269c155c3c95",
-    "name": "AQA-TS-lection13-TheDogsApi_v2",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "15286172"
-  },
-  "item": [
-    {
-      "name": "/images",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/images",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "images"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/images/upload",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 201\", function () {\r",
-              "    pm.response.to.have.status(201);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"Id is not empty\", function () {\r",
-              "    const responseJson = pm.response.json();\r",
-              "    pm.expect(responseJson.id).to.not.be.empty;\r",
-              "    pm.collectionVariables.set(\"imageId\", responseJson.id);\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "formdata",
-          "formdata": [
-            {
-              "key": "file",
-              "type": "file",
-              "src": "/D:/other/robot_dreams/AQA-TypeScript/lesson13-Api-integration-contract-testing/images/pexels-chevanon-1108099.jpg"
-            },
-            {
-              "key": "sub_id",
-              "value": "Vi Le",
-              "type": "text"
-            }
-          ]
-        },
-        "url": {
-          "raw": "{{baseUrl}}/images/upload",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "images",
-            "upload"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/breeds",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"save rrandom breed\", function () {\r",
-              "    const responseJson = pm.response.json();\r",
-              "    const randomBreed = responseJson[Math.floor(Math.random() * responseJson.length)];\r",
-              "    console.log(randomBreed);\r",
-              "    pm.expect(randomBreed.id).to.be.not.null;\r",
-              "    pm.expect(randomBreed.name).to.be.not.null;\r",
-              "    pm.collectionVariables.set(\"breedId\", randomBreed.id);\r",
-              "    pm.collectionVariables.set(\"breedObject\", JSON.stringify(randomBreed));\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/breeds",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "breeds"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/images/ID/breeds",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"breed_id\": {{breedId}}\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{baseUrl}}/images/{{imageId}}/breeds",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "images",
-            "{{imageId}}",
-            "breeds"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/images-verify",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});\r",
-              "\r",
-              "pm.test(\"breed is updated correctly\", function () {\r",
-              "    const responseJson = pm.response.json();\r",
-              "    const savedBreed = JSON.parse(pm.collectionVariables.get(\"breedObject\"));\r",
-              "    const breed = responseJson[0].breeds.find(x => x.id = savedBreed.id);\r",
-              "    console.log(responseJson[0].breeds)\r",
-              "    pm.expect(breed).to.not.null;\r",
-              "    pm.expect(breed.name).to.equal(savedBreed.name);\r",
-              "\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/images",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "images"
-          ]
-        }
-      },
-      "response": []
-    }
-  ],
-  "auth": {
-    "type": "apikey",
-    "apikey": [
-      {
-        "key": "key",
-        "value": "x-api-key",
-        "type": "string"
-      },
-      {
-        "key": "value",
-        "value": "live_RkOPUkQ3fRTNFFXDKg9MPCIfmAHVRMgFcMLbF14PUobewScZYbXnyM1Jw5OQkEj0",
-        "type": "string"
-      }
-    ]
-  },
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://api.thedogapi.com/v1",
-      "description": "keep the same data in \"Shared Value\" columt for export collection with the data"
-    },
-    {
-      "key": "token",
-      "value": ""
-    },
-    {
-      "key": "imageId",
-      "value": ""
-    },
-    {
-      "key": "breedId",
-      "value": ""
-    },
-    {
-      "key": "breedObject",
-      "value": ""
-    }
-  ]
+	"info": {
+		"_postman_id": "90804514-335e-462f-98e2-269c155c3c95",
+		"name": "AQA-TS-lection13-TheDogsApi_v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Images",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Arrange: log the action and prepare variables if needed",
+							"console.log('Arrange: Requesting the list of user-uploaded images');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Assert: Verify status code is 200",
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Assert: Validate JSON Schema of the response",
+							"pm.test('Response matches the Image List schema', function () {",
+							"    const responseJson = pm.response.json();",
+							"    const schema = {",
+							"        type: 'array',",
+							"        items: {",
+							"            type: 'object',",
+							"            required: ['id', 'url'],",
+							"            properties: {",
+							"                id: { type: 'string' },",
+							"                url: { type: 'string' },",
+							"                width: { type: 'number' },",
+							"                height: { type: 'number' }",
+							"            }",
+							"        }",
+							"    };",
+							"    pm.expect(tv4.validate(responseJson, schema), tv4.error).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/images",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Image",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Arrange: Provide a URL for the image instead of a local file",
+							"const imageUrl = 'https://cdn2.thedogapi.com/images/HkNS9lq47_1280.jpg';",
+							"pm.collectionVariables.set('tempImageUrl', imageUrl);",
+							"console.log('Arrange: Using URL for upload:', imageUrl);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Assert: Verify status code is 201 (Created)",
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"// Assert: Validate JSON Schema for upload response",
+							"pm.test('Upload response matches schema', function () {",
+							"    const responseJson = pm.response.json();",
+							"    const schema = {",
+							"        type: 'object',",
+							"        required: ['id', 'url'],",
+							"        properties: {",
+							"            id: { type: 'string' },",
+							"            url: { type: 'string' }",
+							"        }",
+							"    };",
+							"    pm.expect(tv4.validate(responseJson, schema), tv4.error).to.be.true;",
+							"});",
+							"",
+							"// Assert: Save imageId for subsequent requests",
+							"const response = pm.response.json();",
+							"pm.collectionVariables.set('imageId', response.id);",
+							"console.log('Assert: Saved imageId for next steps:', response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"{{tempImageUrl}}\",\n    \"sub_id\": \"test-user-gh-actions\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/images/upload",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"images",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Breeds",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Arrange: Log start",
+							"console.log('Arrange: Retrieving list of dog breeds');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Assert: Status code 200",
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Assert: Validate JSON Schema",
+							"pm.test('Breeds list matches schema', function () {",
+							"    const responseJson = pm.response.json();",
+							"    const schema = {",
+							"        type: 'array',",
+							"        items: {",
+							"            type: 'object',",
+							"            required: ['id', 'name']",
+							"        }",
+							"    };",
+							"    pm.expect(tv4.validate(responseJson, schema), tv4.error).to.be.true;",
+							"});",
+							"",
+							"// Assert: Select a random breed and save it",
+							"const breeds = pm.response.json();",
+							"const randomBreed = breeds[Math.floor(Math.random() * breeds.length)];",
+							"pm.collectionVariables.set('breedId', randomBreed.id);",
+							"pm.collectionVariables.set('breedName', randomBreed.name);",
+							"console.log('Assert: Selected breed:', randomBreed.name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/breeds",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"breeds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Breed To Image",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Arrange: Verify pre-requisites",
+							"const imageId = pm.collectionVariables.get('imageId');",
+							"const breedId = pm.collectionVariables.get('breedId');",
+							"if (!imageId || !breedId) {",
+							"    throw new Error('Arrange failed: imageId or breedId not found in collection variables');",
+							"}",
+							"console.log('Arrange: Associating breed ' + breedId + ' with image ' + imageId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Assert: Status code 200 or 201",
+							"pm.test('Status code is 200 or 201', function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"// Assert: Validate Schema",
+							"pm.test('Response matches schema', function () {",
+							"    const responseJson = pm.response.json();",
+							"    const schema = {",
+							"        type: 'object',",
+							"        properties: {",
+							"            message: { type: 'string' }",
+							"        }",
+							"    };",
+							"    pm.expect(tv4.validate(responseJson, schema), tv4.error).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"breed_id\": {{breedId}}\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/images/{{imageId}}/breeds",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"images",
+						"{{imageId}}",
+						"breeds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image Breed",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Arrange: log action",
+							"console.log('Arrange: Verifying the breed associated with the image');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Assert: Status code 200",
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Assert: Verify data consistency",
+							"pm.test('The image has the correct breed assigned', function () {",
+							"    const images = pm.response.json();",
+							"    const myImageId = pm.collectionVariables.get('imageId');",
+							"    const myBreedName = pm.collectionVariables.get('breedName');",
+							"    ",
+							"    const foundImage = images.find(img => img.id === myImageId);",
+							"    pm.expect(foundImage, 'Uploaded image not found in the list').to.not.be.undefined;",
+							"    ",
+							"    const hasBreed = foundImage.breeds.some(b => b.name === myBreedName);",
+							"    pm.expect(hasBreed, 'Assigned breed not found in image metadata').to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/images",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"images"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "live_RkOPUkQ3fRTNFFXDKg9MPCIfmAHVRMgFcMLbF14PUobewScZYbXnyM1Jw5OQkEj0",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.thedogapi.com/v1"
+		},
+		{
+			"key": "imageId",
+			"value": ""
+		},
+		{
+			"key": "breedId",
+			"value": ""
+		},
+		{
+			"key": "breedName",
+			"value": ""
+		},
+		{
+			"key": "tempImageUrl",
+			"value": ""
+		}
+	]
 }
