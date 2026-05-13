@@ -20,7 +20,8 @@ The automated pipeline performs the following steps:
 
 ## View Test Reports
 The latest test reports are automatically published and can be viewed here:
-👉 **[Newman Test Report](https://Lekuro.github.io/Postman-newman-ghActions/)**
+*   👉 **[HTMLExtra Report](https://Lekuro.github.io/Postman-newman-ghActions/)**
+*   👉 **[Allure Test Report (Single File)](https://Lekuro.github.io/Postman-newman-ghActions/allure-report.html)**
 
 ## Local Execution
 To run the tests locally on your machine, follow these steps:

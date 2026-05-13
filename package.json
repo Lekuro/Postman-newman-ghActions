@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Lekuro/Postman-newman-ghActions#readme",
   "devDependencies": {
     "newman": "^6.2.2",
+    "newman-reporter-allure": "^3.8.0",
     "newman-reporter-htmlextra": "^1.23.1"
   }
 }

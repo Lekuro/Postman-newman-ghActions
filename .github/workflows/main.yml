@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
 
       - name: Install Dependencies
         run: npm install
@@ -30,17 +30,30 @@ jobs:
         run: |
           mkdir -p reports images
           curl -L https://upload.wikimedia.org/wikipedia/commons/4/4d/Dog_pose.jpg -o images/test-dog.jpg
-          npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra --reporter-htmlextra-export reports/index.html
+          npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra,allure --reporter-allure-resultsDir allure-results --reporter-htmlextra-export reports/index.html
 
-      - name: Deploy to GitHub Pages
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure Single File Report
+        if: always()
+        run: |
+          allure generate allure-results --clean --single-file -o temp-allure
+          cp temp-allure/index.html reports/allure-report.html
+
+      - name: Deploy Reports to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./reports
 
-      - name: Output Report Link
+      - name: Output Report Links
         if: always()
         run: |
-          echo "### Newman Test Report 🚀" >> $GITHUB_STEP_SUMMARY
-          echo "Your report is available here: [https://Lekuro.github.io/Postman-newman-ghActions/](https://Lekuro.github.io/Postman-newman-ghActions/)" >> $GITHUB_STEP_SUMMARY
+          echo "### View Test Reports
+          The latest test reports are automatically published and can be viewed here:
+          *   👉 **[HTMLExtra Report](https://Lekuro.github.io/Postman-newman-ghActions/)**
+          *   👉 **[Allure Test Report (Single File)](https://Lekuro.github.io/Postman-newman-ghActions/allure-report.html)**
+          " >> $GITHUB_STEP_SUMMARY
+          echo "*   [Allure Single File Report](https://Lekuro.github.io/Postman-newman-ghActions/allure-report.html)" >> $GITHUB_STEP_SUMMARY
