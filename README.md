@@ -44,3 +44,8 @@ To run the tests locally on your machine, follow these steps:
 
 4. **View the report:**
    Open the `reports/index.html` file in your web browser.
+
+5. **run test locally:** 
+   ```bash
+   npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json
+   ```
