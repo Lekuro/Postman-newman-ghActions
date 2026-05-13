@@ -56,4 +56,3 @@ jobs:
           *   👉 **[HTMLExtra Report](https://Lekuro.github.io/Postman-newman-ghActions/)**
           *   👉 **[Allure Test Report (Single File)](https://Lekuro.github.io/Postman-newman-ghActions/allure-report.html)**
           " >> $GITHUB_STEP_SUMMARY
-          echo "*   [Allure Single File Report](https://Lekuro.github.io/Postman-newman-ghActions/allure-report.html)" >> $GITHUB_STEP_SUMMARY
