@@ -28,7 +28,8 @@ jobs:
       - name: Run Postman Tests
         continue-on-error: true
         run: |
-          mkdir -p reports
+          mkdir -p reports images
+          curl -L https://upload.wikimedia.org/wikipedia/commons/4/4d/Dog_pose.jpg -o images/test-dog.jpg
           npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra --reporter-htmlextra-export reports/index.html
 
       - name: Deploy to GitHub Pages
