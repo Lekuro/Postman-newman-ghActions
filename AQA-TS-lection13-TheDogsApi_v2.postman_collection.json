@@ -22,7 +22,7 @@
           "script": {
             "exec": [
               "pm.test('Status code is 200', function () {",
-              "    pm.response.to.have.status(2000);",
+              "    pm.response.to.have.status(200);",
               "});",
               "",
               "// Assert: Save an existing imageId for subsequent tests",
