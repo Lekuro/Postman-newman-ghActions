@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p reports images
           curl -L https://upload.wikimedia.org/wikipedia/commons/4/4d/Dog_pose.jpg -o images/test-dog.jpg
-          npx newman run AQA-TS-lection13-TheDogsApi_v2.postman_collection.json -r htmlextra,allure --reporter-allure-resultsDir allure-results --reporter-htmlextra-export reports/index.html
+          npx newman run AQA-TS-HW13-Api-integration-contract.postman_collection.json -r htmlextra,allure --reporter-allure-resultsDir allure-results --reporter-htmlextra-export reports/index.html
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline
